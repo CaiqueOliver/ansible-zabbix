@@ -1,18 +1,6 @@
 ---
 - hosts: zabbix
   tasks:
-  - name: install Python e agent zabbix
-    apt:
-      name: ['python', 'python-pip']
-      update_cache: yes
-      state: present
-    when: (ansible_os_family == "Debian") or (ansible_os_family == "Ubuntu")
-
-  - name: Removendo Zabbix-Agent
-    apt:
-      name: zabbix-agent
-      state: removed
-
   - name: Registro de sistema operacional
     shell: lsb_release -si | tr 'A-Z' 'a-z'
     register: SO
@@ -38,7 +26,7 @@
     when: ipack.stdout != "1"
 
   - name: Baixando biblioteca Zabbix-Agent 4.0
-    action: raw wget https://repo.zabbix.com/zabbix/4.0/"{{ SO.stdout }}"/pool/main/z/zabbix-release_4.0.2%2B"{{ SOVERSION.stdout }}"_all.deb
+    action: wget https://cdn.zabbix.com/zabbix/binaries/stable/6.0/6.0.3/zabbix_agent-6.0.3-linux-4.12-ppc64le-static.tar.gz
 
   - name: Executando novos repositorios .deb
     action: raw dpkg -i zabbix-release_4.0-2+"{{ SOVERSION.stdout }}"_all.deb
