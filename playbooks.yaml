@@ -39,6 +39,9 @@
   - name: Install agent-zabbix
     action: apt pkg=zabbix-agent state=latest
 
+  - name: write the apache config file
+    template: src=/srv/zabbix_agentd.j2 dest=/etc/zabbix/zabbix_agentd.conf
+
   - name: Copiando arquivo de configuracao do zabbix-agent
     action: copy src=/srv/zabbix/teste.txt dest=/etc/zabbix/externalscripts/teste.txt owner=zabbix group=zabbix mode=0777
 
