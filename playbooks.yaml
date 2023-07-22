@@ -40,9 +40,7 @@
     action: apt pkg=zabbix-agent state=latest
 
   - name: Copiando arquivo de configuracao do zabbix-agent
-    copy:
-      src: zabbix/zabbix_agentd.conf
-      dest: /etc/zabbix/
+    action: copy src=/srv/zabbix/teste.txt dest=/etc/zabbix/externalscripts/teste.txt owner=zabbix group=zabbix mode=0777
 
   - name: adicionado nome do host
     action: raw sed -i "s/Hostname=zabbix/Hostname="{{ hname.stdout }}"/g" /etc/zabbix/zabbix_agentd.conf
